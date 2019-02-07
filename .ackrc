@@ -1,0 +1,6 @@
+--follow
+--type-set=spec:ext:spec.js,test.js
+#--type-set=pt:ext:pt,zpt,cpt
+#--type-set=zcml:ext:zcml
+--ignore-dir=.next
+
