@@ -1,0 +1,84 @@
+[user]
+	name = Davi Medeiros
+	email = davilima6@gmail.com
+[diff]
+	colorMoved = true
+[diff "cfg"]
+	funcname = ^\\(\\[.*\\].*\\)$
+[core]
+	excludesfile = ~/.gitignore
+#	abbrev = 7
+[blame]
+	ignoreRevsFile = .git-blame-ignore-revs
+[alias]
+	a = add
+	b = branch
+	bs = branch --sort=-committerdate
+	ci = commit
+	amm = commit -a --amend --no-edit
+	co = checkout
+	cp = cherry-pick
+	st = status -s -b
+	stm = diff --name-only --diff-filter=M
+	stu = diff --name-only --diff-filter=U
+	s = "!f() { git stash save "$1"; }; f"
+	sl = stash list
+	sd = stash drop
+	sp = stash pop
+	ss = "!f() { git stash show -p stash@{$1}; }; f"
+	cl = clone
+	pl = pull
+	ps = push
+	psf = push --force-with-lease
+	psup = !bash -c '"echo git push --set-upstream origin $git_current_branch"'
+	df = diff
+	dh = diff head
+	dhh = diff head -- ':!**/*.tsx.snap'
+	dst = "!f() { git diff --stat -r ${1-main}; }; f"
+	dstt = 'dst --shortstat'
+	changes = diff --name-status -r
+	fixup = commit --amend -C HEAD
+	timeline = log --graph --branches --pretty=oneline --decorate
+	untracked-files = ls-files -o --exclude-standard
+	ignored-files = ls-files --others -i --exclude-standard
+	modified-files = ls-files -m
+	stash-unapply = !git stash show -p | git apply -R
+	rewind = reset --soft HEAD~
+	return = "!f() { git reset --hard HEAD~$1; }; f"
+	rescue = "!f() { git reset --quiet -- $@; git restore -- $@; }; f"
+	r = rebase
+	reb = "!f() { git rebase -i HEAD~$1; }; f"
+	cat = show --name-status --pretty="format:"
+	log = l
+	lp = log -p
+	ld = log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat
+	ls = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --graph
+	lr= log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+	lg = log --graph --oneline --all --decorate
+[color]
+	status = auto
+	diff = auto
+	branch = auto
+	ui = true
+[help]
+	format = web
+	autocorrect = 1
+[difftool "sourcetree"]
+	cmd = meld \"$LOCAL\" \"$REMOTE\" &
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[http]
+	sslVerify = false
+[branch]
+	autosetuprebase = always
+[init]
+	templatedir = ~/.git-templates
+[log]
+#	abbrevcommit = yes
+[maintenance]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

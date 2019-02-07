@@ -1,0 +1,13 @@
+#!/bin/bash
+
+COMMIT_TYPE=$2
+[[ $COMMIT_TYPE != "message" ]] && exit 0
+
+TICKET=$(git rev-parse --abbrev-ref HEAD | grep -Eo '^\w+-\d+')
+[[ -z $TICKET ]] && exit 0
+
+COMMIT_FILE=$1
+COMMIT_MESSAGE=$(cat $COMMIT_FILE)
+COMMIT_PREFIX=${TICKET-}
+
+echo "$COMMIT_PREFIX: $COMMIT_MESSAGE" > $COMMIT_FILE

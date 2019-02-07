@@ -1,0 +1,17 @@
+#!/bin/bash
+# Add branch prefix to bottom of commit messages
+
+# Configure branches for which you wish to disable this script, space separated
+BRANCHES_TO_SKIP=(master)
+
+# Get current branch name prefix
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
+BRANCH_PREFIX=$(echo $BRANCH_NAME | sed -e 's:^\([^-]*-[^-]*\)-.*:\1:' -e 'y/[az]/[AZ]/')
+
+# Check if branch is in exclusion list
+IS_BRANCH_EXCLUDED=$(printf "%s\n" "${BRANCHES_TO_SKIP[@]}" | grep -c "^$BRANCH_NAME$")
+
+# If not on detached head state (e.g. rebasing) neither excluded, append branch prefix to commit message
+if [ -n "$BRANCH_NAME" ] && ! [[ $IS_BRANCH_EXCLUDED -eq 1 ]]; then
+  echo -e "\n--\nhttps://my.atlassian.net/browse/$BRANCH_PREFIX" >> $1
+fi
